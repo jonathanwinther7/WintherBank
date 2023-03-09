@@ -1,7 +1,5 @@
 package br.com.alura.WintherBank.modelo
 
-var totalContas = 0
-    private set
 
 abstract class Conta(
     var titular: Cliente,
@@ -9,11 +7,16 @@ abstract class Conta(
 ) {
     var saldo = 0.0
         protected set
-    init {
-        println("Criando conta")
-        totalContas++
+
+    companion object {
+        var total = 0
+            private set
     }
 
+    init {
+        println("Criando conta")
+        total++
+    }
 
     fun deposita(valor: Double) {
         if (valor > 0) {
