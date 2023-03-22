@@ -18,5 +18,4 @@ class Diretor(
     override fun autentica(senha: Int): Boolean {
         return super<FuncionarioAdmin>.autentica(senha)
     }
-
 }

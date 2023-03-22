@@ -4,7 +4,8 @@ import br.com.alura.WintherBank.modelo.Conta
 
 class ContaSalario(
     titular: Cliente,
-    numero: Int
+    numero: Int,
+    override val senha: Int
 ) : Conta(
     titular = titular,
     numero = numero

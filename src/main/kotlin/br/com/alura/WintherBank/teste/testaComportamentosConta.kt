@@ -1,3 +1,5 @@
+import br.com.alura.WintherBank.excption.FalhaAutenticacaoException
+import br.com.alura.WintherBank.excption.SaldoInsuficienteException
 import br.com.alura.WintherBank.modelo.Cliente
 import br.com.alura.WintherBank.modelo.ContaCorrente
 import br.com.alura.WintherBank.modelo.ContaPoupanca
@@ -5,19 +7,19 @@ import br.com.alura.WintherBank.modelo.ContaSalario
 
 fun testaComportamentosConta() {
 
-    val alex = Cliente(nome = "Alex", cpf = "", senha = 1)
+    val alex = Cliente(nome = "Alex", cpf = "", senha = 3)
 
-    val contaAlex = ContaCorrente(titular = alex, numero = 1000)
+    val contaAlex = ContaCorrente(titular = alex, numero = 1000, senha = 1)
     contaAlex.deposita(valor = 200.0)
 
-    val fran = Cliente(nome = "Fran", cpf = "", senha = 2)
+    val fran = Cliente(nome = "Fran", cpf = "", senha = 3)
 
-    val contaFran = ContaPoupanca(numero = 1001, titular = fran)
+    val contaFran = ContaPoupanca(numero = 1001, titular = fran, senha = 3)
     contaFran.deposita(valor = 300.0)
 
     val winther = Cliente(nome = "Winther", cpf = "", senha = 3)
 
-    val contaWinther = ContaSalario(numero = 1005, titular = winther)
+    val contaWinther = ContaSalario(numero = 1005, titular = winther, senha = 1)
     contaWinther.deposita(valor = 500.0)
 
     println(contaWinther.titular)
@@ -67,11 +69,23 @@ fun testaComportamentosConta() {
 
     println("transferencia da conta da Fran para o Alex")
 
-    if (contaFran.trasnfere(destino = contaAlex, valor = 200.0)) {
+    try {
+        contaFran.trasnfere(destino = contaAlex, valor = 250.0, senha = 3)
         println("transferência concluida")
-    } else {
+    } catch (e: SaldoInsuficienteException) {
         println("Falha na trasnferencia")
+        println("Saldo insuficiente")
+        e.printStackTrace()
+    } catch (e: FalhaAutenticacaoException) {
+        println("Falha na trasnferencia")
+        println("Falha na autenticacao")
+        e.printStackTrace()
+    } catch (e: Exception) {
+        println("Erro desconhecido")
+        e.printStackTrace()
     }
+
+
     println(contaAlex.saldo)
     println(contaFran.saldo)
 }

@@ -4,7 +4,7 @@ package br.com.alura.WintherBank.modelo
 abstract class Conta(
     var titular: Cliente,
     val numero: Int,
-) {
+): Autenticavel {
     var saldo = 0.0
         protected set
 
@@ -16,6 +16,10 @@ abstract class Conta(
     init {
         println("Criando conta")
         total++
+    }
+
+    override fun autentica(senha: Int): Boolean {
+        return titular.autentica(senha)
     }
 
     fun deposita(valor: Double) {
